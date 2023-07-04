@@ -1,4 +1,4 @@
-.PHONY: validate verify verify_ruby verify_golang test test_ruby test_golang coverage coverage_golang setup _script_install build compile check clean install
+.PHONY: validate verify verify_ruby verify_golang test test_ruby test_golang coverage coverage_golang setup _make_necessary_dirs build compile check clean install
 
 FIPS_MODE ?= 0
 OS := $(shell uname)
@@ -63,10 +63,10 @@ coverage: coverage_golang
 coverage_golang:
 	[ -f cover.out ] && go tool cover -func cover.out
 
-setup: _script_install bin/gitlab-shell
+setup: _make_necessary_dirs bin/gitlab-shell
 
-_script_install:
-	bin/install
+_make_necessary_dirs:
+	support/make_necessary_dirs
 
 compile: bin/gitlab-shell bin/gitlab-sshd
 bin/gitlab-shell: $(GO_SOURCES)
