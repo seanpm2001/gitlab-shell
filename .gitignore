@@ -7,11 +7,7 @@
 .gitlab_shell_secret
 .idea
 /*.log*
-/bin/check
-/bin/gitlab-shell
-/bin/gitlab-shell-authorized-keys-check
-/bin/gitlab-shell-authorized-principals-check
-/bin/gitlab-sshd
+/bin/*
 /go_build
 authorized_keys.lock
 config.yml
