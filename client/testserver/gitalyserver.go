@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/stretchr/testify/require"
 	"gitlab.com/gitlab-org/gitaly/v16/client"
 	pb "gitlab.com/gitlab-org/gitaly/v16/proto/go/gitalypb"
@@ -85,6 +86,10 @@ func StartGitalyServer(t *testing.T, network string) (string, *TestGitalyServer)
 	switch network {
 	case "unix":
 		tempDir, _ := os.MkdirTemp("", "gitlab-shell-test-api")
+		// tempDir := t.TempDir()
+
+		spew.Dump(tempDir)
+
 		gitalySocketPath := path.Join(tempDir, "gitaly.sock")
 		t.Cleanup(func() { require.NoError(t, os.RemoveAll(tempDir)) })
 
