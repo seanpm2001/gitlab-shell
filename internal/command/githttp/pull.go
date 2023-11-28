@@ -4,12 +4,13 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"io"
+
 	"gitlab.com/gitlab-org/gitlab-shell/v14/internal/command/readwriter"
 	"gitlab.com/gitlab-org/gitlab-shell/v14/internal/config"
 	"gitlab.com/gitlab-org/gitlab-shell/v14/internal/gitlabnet/accessverifier"
 	"gitlab.com/gitlab-org/gitlab-shell/v14/internal/gitlabnet/git"
 	"gitlab.com/gitlab-org/gitlab-shell/v14/internal/pktline"
-	"io"
 )
 
 const pullService = "git-upload-pack"
@@ -86,6 +87,12 @@ func (c *PullCommand) readFromStdin(pw *io.PipeWriter) {
 
 		if pktline.IsDone(line) {
 			pw.Write(line)
+
+			break
+		}
+
+		if pktline.IsFlush(line) {
+			pw.Write([]byte(scanner.Text() + "0009done\n"))
 
 			break
 		}
